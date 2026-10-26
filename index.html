@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Parte de horas</title>
-<meta name="theme-color" content="#3046D1">
+<meta name="theme-color" content="#0062A1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Horas">
@@ -17,7 +17,7 @@
 /* Layout: una columna estrecha tipo ficha de fichaje; pestañas arriba; tarjetas solo para las líneas que se editan */
 :root{
   --bg:#F1F3F6; --surface:#FFFFFF; --ink:#15181F; --muted:#5D6473; --line:#D9DDE5;
-  --accent:#3046D1; --accent-soft:#E4E8FB; --on-accent:#FFFFFF; --warn:#A86A12; --warn-soft:#FBF0DC;
+  --accent:#0062A1; --accent-soft:#E1EFF8; --brand2:#FF6A78; --on-accent:#FFFFFF; --warn:#A86A12; --warn-soft:#FBF0DC;
   --f-display:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
   --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
   --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
@@ -25,10 +25,10 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#111318; --surface:#1A1D24; --ink:#ECEEF2; --muted:#9BA2B0; --line:#2C303A;
-  --accent:#7E8CFF; --accent-soft:#252A4A; --on-accent:#0E1020; --warn:#E3AB4E; --warn-soft:#33281A; color-scheme:dark}}
+  --accent:#6CB8EC; --accent-soft:#16304A; --brand2:#FF8592; --on-accent:#0E1020; --warn:#E3AB4E; --warn-soft:#33281A; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#111318; --surface:#1A1D24; --ink:#ECEEF2; --muted:#9BA2B0; --line:#2C303A;
-  --accent:#7E8CFF; --accent-soft:#252A4A; --on-accent:#0E1020; --warn:#E3AB4E; --warn-soft:#33281A; color-scheme:dark}
+  --accent:#6CB8EC; --accent-soft:#16304A; --brand2:#FF8592; --on-accent:#0E1020; --warn:#E3AB4E; --warn-soft:#33281A; color-scheme:dark}
 html,body{background:var(--bg);color:var(--ink)}
 body{font-family:var(--f-body);font-size:16px;line-height:1.5;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
 .wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
@@ -118,6 +118,21 @@ body{margin:0}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:14px}
 ol.steps{margin:0;padding-left:1.2rem;display:flex;flex-direction:column;gap:6px;font-size:.92rem;color:var(--muted)}
 code{font-family:var(--f-mono);font-size:.85em}
+.brand{display:inline-flex;align-items:center;background:#FFFFFF;border-radius:10px;padding:6px 10px;box-shadow:0 0 0 1px var(--line)}
+.brand img{display:block;height:28px;width:auto}
+.titlewrap{display:flex;flex-direction:column;gap:10px;align-items:flex-start}
+.whochip{font:600 .78rem var(--f-body);background:var(--accent-soft);color:var(--accent);padding:4px 10px;border-radius:999px;white-space:nowrap}
+.mename{font:600 1.05rem var(--f-body);padding:10px 0}
+.cfgrow.people{grid-template-columns:1fr 130px auto auto}
+@media (max-width:520px){.cfgrow.people{grid-template-columns:1fr auto}.cfgrow.people select{grid-column:1}.cfgrow.people [data-link]{grid-column:2;grid-row:2}}
+.btn.sm{padding:8px 12px;font-size:.85rem}
+details.help{border-top:1px solid var(--line);padding-top:14px;font-size:.92rem}
+details.help summary{cursor:pointer;color:var(--muted);font-weight:600}
+details.help[open] summary{margin-bottom:10px}
+.wstat{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:600 .8rem var(--f-body);padding:4px 10px;border-radius:999px;background:var(--warn-soft);color:var(--warn)}
+.chip.ok{background:var(--accent-soft);color:var(--accent)}
+.cxmsg{background:var(--warn-soft);border-radius:8px;padding:10px 12px;font-size:.9rem}
 *,*::before,*::after{box-sizing:border-box}
 .wrap>*,section.pane>*,.block>*{min-width:0}
 td.share{min-width:90px}
@@ -127,17 +142,18 @@ td.share{min-width:90px}
 <body>
 <div class="wrap">
   <header>
-    <h1>Parte de horas</h1>
-    <div class="hdr-r"><div class="stamp" id="stamp"></div><button class="iconbtn" id="btnRefresh" aria-label="Actualizar datos"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>Actualizar</button></div>
+    <div class="titlewrap"><span class="brand"><img src="logo.png" alt="la meGustería" width="151" height="28"></span><h1>Parte de horas</h1></div>
+    <div class="hdr-r"><span class="whochip" id="whoChip" hidden></span><div class="stamp" id="stamp"></div><button class="iconbtn" id="btnRefresh" aria-label="Actualizar datos"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>Actualizar</button></div>
   </header>
 
   <!-- CONECTAR (primera vez) -->
   <section class="pane" id="pane-conectar" hidden>
     <div class="card">
       <h2>Conecta la app con la hoja de Google</h2>
-      <p class="small muted">Solo hace falta una vez en cada móvil. Si te han pasado un enlace de conexión, ábrelo y esta pantalla se salta sola.</p>
+      <p class="small muted">Solo hace falta una vez en cada móvil. Si te han pasado tu enlace personal, ábrelo y esta pantalla se salta sola.</p>
+      <p class="cxmsg" id="cxMsg" hidden></p>
       <div class="block"><label for="cxUrl">Dirección de la hoja (URL de la aplicación web)</label><input id="cxUrl" type="url" inputmode="url" autocomplete="off" placeholder="https://script.google.com/macros/s/…/exec"></div>
-      <div class="block"><label for="cxKey">Clave</label><input id="cxKey" type="password" autocomplete="off"></div>
+      <div class="block"><label for="cxKey">Tu código personal</label><input id="cxKey" type="password" autocomplete="off"></div>
       <div><button class="btn" id="btnConnect">Conectar</button></div>
     </div>
   </section>
@@ -156,7 +172,8 @@ td.share{min-width:90px}
   <section class="pane" id="pane-registrar">
     <div id="setupNotice" class="empty" hidden>Antes de registrar horas, da de alta a tus clientes y al equipo en <a href="#ajustes" data-goto="ajustes">Clientes</a>.</div>
     <div class="row2">
-      <div class="block"><label for="person">¿Quién eres?</label><select id="person"></select></div>
+      <div class="block" id="personBlock"><label for="person">¿Para quién registras?</label><select id="person"></select></div>
+      <div class="block" id="meBlock" hidden><label>Registrando como</label><div class="mename" id="meName"></div></div>
       <div class="block"><label for="date">Día</label><input type="date" id="date"></div>
     </div>
     <div class="block">
@@ -171,6 +188,7 @@ td.share{min-width:90px}
         <button class="btn ghost" id="btnAddLine">Añadir línea a mano</button>
       </div>
     </div>
+    <div class="banner" id="lockNotice" hidden>Esta semana ya está validada por la responsable. Si hay que cambiar algo, díselo a ella.</div>
     <div class="block" id="linesBlock" hidden>
       <div class="actions between"><h2>Revisa antes de guardar</h2><span class="total" id="linesTotal"></span></div>
       <p class="small muted">Lo marcado en amarillo no se ha entendido del dictado. Complétalo a mano o da de alta el cliente si es nuevo.</p>
@@ -212,6 +230,7 @@ td.share{min-width:90px}
         <button class="btn ghost" id="wkNext" aria-label="Semana siguiente">›</button>
       </div>
       <div class="bigtotal"><b id="weekTotal">0 h</b><span class="muted">en la semana</span></div>
+      <div class="wstat" id="weekStatus"></div>
       <div class="days" id="weekDays"></div>
       <div class="block"><h3>Por cliente esta semana</h3><div id="weekClients"></div></div>
     </div>
@@ -228,31 +247,31 @@ td.share{min-width:90px}
     <div class="sep"></div>
     <div class="block">
       <h2>Equipo</h2>
-      <p class="small muted">Las personas que registran horas.</p>
+      <p class="small muted">Cada persona entra con su <b>enlace personal</b>. Con «Solo lo suyo» ve y registra únicamente sus horas y no ve esta pestaña. Con «Ve todo» ve las horas de todo el equipo y gestiona clientes y equipo. Si alguien deja la agencia, quítalo de la lista y su enlace deja de funcionar.</p>
       <div class="cfg" id="cfgPeople"></div>
       <div><button class="btn ghost" id="addPerson">Añadir persona</button></div>
+      <input id="linkOut" readonly aria-label="Enlace personal" hidden>
     </div>
     <div class="actions">
       <button class="btn" id="saveCfg">Guardar cambios</button>
       <span class="small muted" id="cfgState"></span>
     </div>
-    <div class="sep"></div>
-    <div class="block">
-      <h2>Conexión</h2>
-      <p class="small muted">Para que otra persona use la app sin teclear nada, copia este enlace y envíaselo por privado. Lleva la clave dentro.</p>
-      <div class="actions"><button class="btn ghost" id="btnCopyLink">Copiar enlace para el equipo</button><button class="btn quiet" id="btnDisconnect">Desconectar este móvil</button></div>
-      <input id="teamLink" readonly aria-label="Enlace para el equipo" placeholder="El enlace aparecerá aquí">
-      <h3 style="margin-top:8px">Instalar en el móvil</h3>
-      <ol class="steps"><li>iPhone: en Safari, botón Compartir › <b>Añadir a pantalla de inicio</b>.</li><li>Android: en Chrome, menú ⋮ › <b>Instalar aplicación</b> o <b>Añadir a pantalla de inicio</b>.</li></ol>
-    </div>
   </section>
+
+  <details class="help">
+    <summary>Instalar en el móvil y conexión</summary>
+    <div class="block">
+      <ol class="steps"><li>iPhone: en Safari, botón Compartir › <b>Añadir a pantalla de inicio</b>.</li><li>Android: en Chrome, menú ⋮ › <b>Instalar aplicación</b> o <b>Añadir a pantalla de inicio</b>.</li></ol>
+      <div><button class="btn quiet" id="btnDisconnect">Desconectar este móvil</button></div>
+    </div>
+  </details>
   </div>
 </div>
 <div class="toast" id="toast" hidden></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script>
 (function(){
-const S={api:lsGet("ph_api")||"",key:lsGet("ph_key")||"",loaded:false,
+const S={api:lsGet("ph_api")||"",key:lsGet("ph_key")||"",loaded:false,me:null,weeks:[],
   config:{people:[],clients:[]},entries:[],range:null,loadSeq:0,
   rows:[],cfgDirty:false,month:null,weekStart:null,view:"mes"};
 const $=s=>document.querySelector(s);
@@ -274,6 +293,15 @@ function lsSet(k,v){try{localStorage.setItem(k,v)}catch(e){}}
 function toast(msg){const t=$("#toast");t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,3500)}
 function banner(msg){const b=$("#statusBanner");b.textContent=msg||"";b.hidden=!msg}
 const nameOf=(arr,id,fb)=>{const x=arr.find(a=>a.id===id);return x?x.name:fb};
+const isAdmin=()=>!!(S.me&&S.me.admin);
+const currentPerson=()=>isAdmin()?$("#person").value:(S.me&&S.me.personId)||"";
+const weekInfo=(pid,date)=>S.weeks.find(w=>w.personId===pid&&w.monday===mondayOf(date));
+const isLocked=(pid,date)=>!isAdmin()&&!!(pid&&date&&(weekInfo(pid,date)||{}).revisado);
+const fmtD=s=>{const d=parseD(s);return d.getDate()+"/"+(d.getMonth()+1)};
+function applyLock(){
+  const lk=isLocked(currentPerson(),$("#date").value);
+  $("#lockNotice").hidden=!lk;$("#btnSave").disabled=lk;
+}
 
 /* ---------- Conexión con la hoja de Google ---------- */
 class ApiError extends Error{constructor(code){super(code);this.code=code}}
@@ -290,7 +318,9 @@ async function apiPost(body){
 }
 function errMsg(e){
   const c=e&&e.code;
-  if(c==="clave")return "La clave no es correcta. Revísala en Ajustes › Conexión.";
+  if(c==="clave")return "Este código no es válido. Pide a la responsable tu enlace personal.";
+  if(c==="permiso")return "No tienes permiso para hacer esto.";
+  if(c==="validada")return "Esa semana ya está validada. Si hay que cambiar algo, díselo a la responsable.";
   if(c==="red")return "Sin conexión. Comprueba internet e inténtalo de nuevo.";
   if(c==="respuesta")return "La hoja no responde bien. Revisa que la URL sea la de la aplicación web (termina en /exec).";
   return "No se ha podido completar. Inténtalo de nuevo.";
@@ -349,7 +379,10 @@ function dictationToRows(text){
 
 /* ---------- Registrar ---------- */
 function renderPerson(){
-  const el=$("#person");const cur=el.value||lsGet("ph_person")||"";
+  const adm=isAdmin();
+  $("#personBlock").hidden=!adm;$("#meBlock").hidden=adm;$("#filterPerson").hidden=!adm;
+  if(S.me){$("#meName").textContent=S.me.name||"";const w=$("#whoChip");w.textContent=(S.me.name||"")+(adm?" · ve todo":"");w.hidden=false}
+  const el=$("#person");const cur=el.value||lsGet("ph_person")||(S.me&&S.me.personId)||"";
   el.innerHTML=`<option value="">— Elige tu nombre —</option>`+S.config.people.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}</option>`).join("");
   el.value=S.config.people.some(p=>p.id===cur)?cur:"";
   const fp=$("#filterPerson");const fcur=fp.value||"all";
@@ -400,23 +433,19 @@ async function saveConfig(next){
 }
 async function createClient(name){
   const ex=S.config.clients.find(c=>norm(c.name)===norm(name));if(ex)return ex.id;
-  const c={id:uid(),name,aliases:""};
-  try{await saveConfig({people:S.config.people,clients:S.config.clients.concat([c])});if(!S.cfgDirty)renderCfg(true);return c.id}
+  try{const j=await apiPost({action:"addClient",name});S.config.clients=(j.config&&j.config.clients)||S.config.clients;if(!S.cfgDirty)renderCfg(true);return j.id||null}
   catch(e){toast(errMsg(e));return null}
 }
 /* Aprende: si se corrige a mano el cliente de una línea, guarda cómo se dijo como apodo */
 async function learnAliases(rows){
-  const add={};
   for(const r of rows){
     if(!r.clientId||r.clientId===r.auto||!r.guess)continue;
-    const g=r.guess.trim();const c=S.config.clients.find(x=>x.id===r.clientId);if(!c)continue;
+    const c=S.config.clients.find(x=>x.id===r.clientId);if(!c)continue;
     const have=[c.name,...String(c.aliases||"").split(",")].map(clean);
-    if(have.includes(clean(g)))continue;
-    (add[c.id]=add[c.id]||[]).push(g);
+    if(have.includes(clean(r.guess)))continue;
+    try{await apiPost({action:"alias",clientId:c.id,alias:r.guess.trim()});c.aliases=[c.aliases,r.guess.trim()].filter(Boolean).join(", ")}catch(e){}
   }
-  if(!Object.keys(add).length)return;
-  const clients=S.config.clients.map(c=>add[c.id]?Object.assign({},c,{aliases:[c.aliases,...add[c.id]].filter(Boolean).join(", ")}):c);
-  try{await saveConfig({people:S.config.people,clients});if(!S.cfgDirty)renderCfg(true)}catch(e){}
+  if(!S.cfgDirty)renderCfg(true);
 }
 $("#btnParse").addEventListener("click",()=>{
   const txt=$("#dictado").value.trim();if(!txt){toast("Dicta o escribe primero lo que has hecho.");return}
@@ -428,8 +457,8 @@ $("#btnDiscard").addEventListener("click",()=>{S.rows=[];renderLines()});
 $("#person").addEventListener("change",e=>{lsSet("ph_person",e.target.value);renderDay()});
 $("#date").addEventListener("change",()=>{ensureRange();renderDay()});
 $("#btnSave").addEventListener("click",async()=>{
-  const person=$("#person").value,date=$("#date").value;
-  if(!person){toast("Elige tu nombre arriba.");$("#person").focus();return}
+  const person=currentPerson(),date=$("#date").value;
+  if(!person){toast("Elige para quién registras.");$("#person").focus();return}
   if(!date){toast("Elige el día.");return}
   if(S.rows.some(r=>!r.clientId||!(parseFloat(r.hours)>0)||parseFloat(r.hours)>24)){toast("Falta cliente u horas en alguna línea (en amarillo).");renderLines();return}
   const btn=$("#btnSave");btn.disabled=true;btn.textContent="Guardando…";
@@ -442,25 +471,26 @@ $("#btnSave").addEventListener("click",async()=>{
     const h=entries.reduce((a,e)=>a+e.hours,0);
     S.rows=[];renderLines();$("#dictado").value="";renderDay();renderHoras();
     toast(`Guardado: ${fmtH(h)} en ${entries.length} ${entries.length===1?"línea":"líneas"}.`);
-    learnAliases(rows);
+    learnAliases(rows).then(()=>ensureRange(true));
   }catch(e){toast(errMsg(e))}
   finally{btn.disabled=false;btn.textContent="Guardar día"}
 });
 function renderDay(){
-  const person=$("#person").value,date=$("#date").value,d=parseD(date);
+  const person=currentPerson(),date=$("#date").value,d=parseD(date);
   $("#dayTitle").textContent="Guardado el "+(isNaN(d)?"día":d.toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long"}));
-  const box=$("#dayList");
+  const box=$("#dayList");applyLock();
   if(!S.loaded){box.innerHTML=`<div class="empty">Cargando registros…</div>`;$("#dayTotal").textContent="";return}
+  const locked=isLocked(person,date);
   const list=S.entries.filter(e=>e.date===date&&(!person||e.personId===person)).sort((a,b)=>(a.at||0)-(b.at||0));
   $("#dayTotal").textContent=list.length?fmtH(list.reduce((a,e)=>a+(+e.hours||0),0)):"";
-  if(!list.length){box.innerHTML=`<div class="empty">${person?"Aún no has guardado nada este día.":"Elige tu nombre para ver lo que has guardado."}</div>`;return}
-  box.innerHTML=`<div class="list">`+list.map(e=>`<div class="item"><div class="h">${fmtH(e.hours)}</div><div class="who">${esc(nameOf(S.config.clients,e.clientId,"Cliente eliminado"))}${e.note?`<span>${esc(e.note)}</span>`:""}</div><button class="btn quiet" data-rm="${esc(e.id)}">Borrar</button></div>`).join("")+`</div>`;
+  if(!list.length){box.innerHTML=`<div class="empty">${person?"Aún no hay nada guardado este día.":"Elige una persona para ver lo guardado."}</div>`;return}
+  box.innerHTML=`<div class="list">`+list.map(e=>`<div class="item"><div class="h">${fmtH(e.hours)}</div><div class="who">${esc(nameOf(S.config.clients,e.clientId,"Cliente eliminado"))}${e.note?`<span>${esc(e.note)}</span>`:""}</div>${locked?"<span></span>":`<button class="btn quiet" data-rm="${esc(e.id)}">Borrar</button>`}</div>`).join("")+`</div>`;
 }
 $("#dayList").addEventListener("click",async e=>{
   const b=e.target,id=b.dataset&&b.dataset.rm;if(!id)return;
   if(!b.dataset.armed){b.dataset.armed="1";b.textContent="¿Seguro?";setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent="Borrar"}},3000);return}
   b.disabled=true;
-  try{await apiPost({action:"delete",id});S.entries=S.entries.filter(x=>x.id!==id);renderDay();renderHoras();toast("Línea borrada.")}
+  try{await apiPost({action:"delete",id});S.entries=S.entries.filter(x=>x.id!==id);renderDay();renderHoras();toast("Línea borrada.");ensureRange(true)}
   catch(err){b.disabled=false;toast(errMsg(err))}
 });
 
@@ -479,7 +509,7 @@ function clientTable(list,showPeople){
 function renderHoras(){
   if($("#pane-horas").hidden)return;
   if(!S.loaded){$("#clientTable").innerHTML=`<div class="empty">Cargando…</div>`;$("#weekDays").innerHTML="";return}
-  const all=$("#filterPerson").value==="all";
+  const all=isAdmin()&&$("#filterPerson").value==="all";
   if(S.view==="mes"){
     const list=filtered(S.month+"-01",monthEnd(S.month));
     $("#monthTotal").textContent=fmtH(list.reduce((a,e)=>a+(+e.hours||0),0));
@@ -499,6 +529,12 @@ function renderHoras(){
       html+=`<div class="day${dl.length?"":" off"}"><div class="d">${d.toLocaleDateString("es-ES",{weekday:"long"})}<span>${d.getDate()}/${d.getMonth()+1}</span></div><div class="c">${cl.length?cl.map(([cid,v])=>{const nt=dl.filter(e=>e.clientId===cid&&e.note).map(e=>e.note).join(" · ");return `<div><span>${esc(nameOf(S.config.clients,cid,"Cliente eliminado"))}</span><i>${fmtN(v)}</i></div>${nt?`<span class="nt">${esc(nt)}</span>`:""}`}).join(""):"Sin registros"}</div><div class="t">${h?fmtH(h):"—"}</div></div>`;
     }
     $("#weekDays").innerHTML=html;
+    const fp=isAdmin()?$("#filterPerson").value:(S.me&&S.me.personId);
+    const ids=fp&&fp!=="all"?[fp]:[...new Set(list.map(e=>e.personId))];
+    $("#weekStatus").innerHTML=ids.filter(pid=>list.some(e=>e.personId===pid)||weekInfo(pid,from)).map(pid=>{
+      const w=weekInfo(pid,from),who=isAdmin()&&!(fp&&fp!=="all")?esc(nameOf(S.config.people,pid,""))+": ":"";
+      return w&&w.revisado?`<span class="chip ok">${who}✓ Validada${w.fecha?" el "+fmtD(w.fecha):""}</span>`:`<span class="chip">${who}Pendiente de revisar</span>`;
+    }).join("");
     $("#weekClients").innerHTML=clientTable(list,all);
   }
 }
@@ -523,20 +559,21 @@ $("#btnExport").addEventListener("click",()=>{
 /* ---------- Clientes y equipo ---------- */
 function renderCfg(force){
   if(S.cfgDirty&&!force)return;const c=S.config;
-  $("#cfgPeople").innerHTML=c.people.map(p=>`<div class="cfgrow people" data-id="${esc(p.id)}"><input data-f="name" value="${esc(p.name)}" aria-label="Nombre" placeholder="Nombre"><button class="btn quiet" data-rmp="${esc(p.id)}" aria-label="Quitar">✕</button></div>`).join("")||`<div class="empty">Añade a las personas que van a registrar horas.</div>`;
+  $("#cfgPeople").innerHTML=c.people.map(p=>`<div class="cfgrow people" data-id="${esc(p.id)}" data-pin="${esc(p.pin||"")}"><input data-f="name" value="${esc(p.name)}" aria-label="Nombre" placeholder="Nombre"><select data-f="rol" aria-label="Qué puede ver"><option value="Trabajador">Solo lo suyo</option><option value="Responsable"${p.rol==="Responsable"?" selected":""}>Ve todo</option></select><button class="btn ghost sm" data-link="${esc(p.id)}"${p.pin?"":" disabled title=\"Guarda los cambios para generar su enlace\""}>${p.pin?"Copiar enlace":"Guarda para crear enlace"}</button><button class="btn quiet" data-rmp="${esc(p.id)}" aria-label="Quitar">✕</button></div>`).join("")||`<div class="empty">Añade a las personas que van a registrar horas.</div>`;
   $("#cfgClients").innerHTML=(c.clients.length?`<div class="cfgrow clients colhead"><span>Cliente</span><span class="alias">Otras formas de nombrarlo</span><span></span></div>`:"")+
     c.clients.map(k=>`<div class="cfgrow clients" data-id="${esc(k.id)}"><input data-f="name" value="${esc(k.name)}" aria-label="Cliente" placeholder="Nombre del cliente"><input class="alias" data-f="aliases" value="${esc(k.aliases||"")}" aria-label="Otras formas de nombrarlo" placeholder="p. ej. López, la panadería"><button class="btn quiet" data-rmc="${esc(k.id)}" aria-label="Quitar">✕</button></div>`).join("")||`<div class="empty">Añade los clientes de la agencia.</div>`;
   $("#cfgState").textContent="";
 }
 function readCfgForm(){
   return {
-    people:[...document.querySelectorAll("#cfgPeople .cfgrow[data-id]")].map(r=>({id:r.dataset.id,name:r.querySelector('[data-f="name"]').value.trim()})),
+    people:[...document.querySelectorAll("#cfgPeople .cfgrow[data-id]")].map(r=>({id:r.dataset.id,name:r.querySelector('[data-f="name"]').value.trim(),rol:r.querySelector('[data-f="rol"]').value,pin:r.dataset.pin||""})),
     clients:[...document.querySelectorAll("#cfgClients .cfgrow[data-id]")].map(r=>({id:r.dataset.id,name:r.querySelector('[data-f="name"]').value.trim(),aliases:r.querySelector('[data-f="aliases"]').value.trim()}))
   };
 }
 function markDirty(){S.cfgDirty=true;$("#cfgState").textContent="Cambios sin guardar"}
 $("#pane-ajustes").addEventListener("input",e=>{if(e.target.closest(".cfg"))markDirty()});
-function addRow(kind){const f=readCfgForm();f[kind].push(kind==="people"?{id:uid(),name:""}:{id:uid(),name:"",aliases:""});S.config=f;renderCfg(true);markDirty();const ins=document.querySelectorAll(`#cfg${kind==="people"?"People":"Clients"} [data-f="name"]`);ins[ins.length-1].focus()}
+$("#pane-ajustes").addEventListener("change",e=>{if(e.target.closest(".cfg"))markDirty()});
+function addRow(kind){const f=readCfgForm();f[kind].push(kind==="people"?{id:uid(),name:"",rol:"Trabajador",pin:""}:{id:uid(),name:"",aliases:""});S.config=f;renderCfg(true);markDirty();const ins=document.querySelectorAll(`#cfg${kind==="people"?"People":"Clients"} [data-f="name"]`);ins[ins.length-1].focus()}
 $("#addPerson").addEventListener("click",()=>addRow("people"));
 $("#addClient").addEventListener("click",()=>addRow("clients"));
 $("#pane-ajustes").addEventListener("click",e=>{
@@ -552,10 +589,10 @@ $("#saveCfg").addEventListener("click",async()=>{
   finally{btn.disabled=false;btn.textContent="Guardar cambios"}
 });
 
-/* ---------- Conexión: primera vez y enlace para el equipo ---------- */
-function teamLink(){
+/* ---------- Conexión: primera vez y enlaces personales ---------- */
+function personalLink(pin){
   const base=location.origin+location.pathname;
-  return base+"#conectar="+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify({u:S.api,k:S.key})))));
+  return base+"#conectar="+encodeURIComponent(btoa(unescape(encodeURIComponent(JSON.stringify({u:S.api,k:pin})))));
 }
 function readSetupHash(){
   const m=location.hash.match(/^#conectar=(.+)$/);if(!m)return false;
@@ -563,19 +600,22 @@ function readSetupHash(){
   try{history.replaceState(null,"",location.pathname)}catch(e){location.hash=""}
   return true;
 }
+$("#cfgPeople").addEventListener("click",async e=>{
+  const id=e.target.dataset&&e.target.dataset.link;if(!id)return;
+  if(S.cfgDirty){toast("Guarda los cambios antes de copiar enlaces.");return}
+  const p=S.config.people.find(x=>x.id===id);if(!p||!p.pin)return;
+  const link=personalLink(p.pin);const out=$("#linkOut");out.value=link;out.hidden=false;
+  try{await navigator.clipboard.writeText(link);toast(`Enlace de ${p.name} copiado. Envíaselo solo a esa persona.`)}
+  catch(err){out.select();toast("Selecciona y copia el enlace.")}
+});
 $("#btnConnect").addEventListener("click",async()=>{
   const u=$("#cxUrl").value.trim(),k=$("#cxKey").value.trim();
   if(!/^https:\/\/script\.google(usercontent)?\.com\//.test(u)){toast("Pega la URL de la aplicación web de Google (empieza por https://script.google.com/).");return}
   if(!k){toast("Escribe la clave.");return}
   const b=$("#btnConnect");b.disabled=true;b.textContent="Comprobando…";
-  try{await apiGet({action:"ping"},u,k);S.api=u;S.key=k;lsSet("ph_api",u);lsSet("ph_key",k);toast("Conectado con la hoja.");start()}
+  try{await apiGet({action:"ping"},u,k);S.api=u;S.key=k;$("#cxMsg").hidden=true;lsSet("ph_api",u);lsSet("ph_key",k);toast("Conectado con la hoja.");start()}
   catch(e){toast(errMsg(e))}
   finally{b.disabled=false;b.textContent="Conectar"}
-});
-$("#btnCopyLink").addEventListener("click",async()=>{
-  const link=teamLink();$("#teamLink").value=link;
-  try{await navigator.clipboard.writeText(link);toast("Enlace copiado. Envíalo por privado a cada persona.")}
-  catch(e){$("#teamLink").select();toast("Selecciona y copia el enlace.")}
 });
 $("#btnDisconnect").addEventListener("click",e=>{
   const b=e.target;if(!b.dataset.armed){b.dataset.armed="1";b.textContent="Pulsa otra vez para desconectar";setTimeout(()=>{if(b.isConnected){delete b.dataset.armed;b.textContent="Desconectar este móvil"}},3000);return}
@@ -589,8 +629,12 @@ async function load(from,to){
   try{
     const j=await apiGet({action:"load",from,to});
     if(seq!==S.loadSeq)return;
+    S.me=j.me||{admin:false,personId:"",name:""};S.weeks=j.weeks||[];
     S.config=j.config||{people:[],clients:[]};S.entries=j.entries||[];S.range=[from,to];S.loaded=true;banner("");refreshAll();
-  }catch(e){if(seq===S.loadSeq){banner(errMsg(e));if(!S.loaded){S.loaded=true;refreshAll()}}}
+    if(!isAdmin()&&!$("#pane-ajustes").hidden)show("registrar");
+  }catch(e){if(seq!==S.loadSeq)return;
+    if(e.code==="clave"){try{localStorage.removeItem("ph_key")}catch(_){}S.key="";S.me=null;S.loaded=false;S.range=null;const m=$("#cxMsg");m.textContent="Este código ya no es válido. Pide a la responsable tu enlace personal.";m.hidden=false;start();return}
+    banner(errMsg(e));if(!S.loaded){S.loaded=true;refreshAll()}}
 }
 function ensureRange(force){
   if(!S.api)return;
@@ -608,6 +652,7 @@ document.addEventListener("visibilitychange",()=>{if(document.visibilityState===
 const TABS=["registrar","horas","ajustes"];
 function show(tab){
   if(!TABS.includes(tab))tab="registrar";
+  if(tab==="ajustes"&&S.me&&!isAdmin())tab="registrar";
   for(const t of TABS){$("#pane-"+t).hidden=t!==tab;document.querySelector(`#tabs [data-tab="${t}"]`).setAttribute("aria-selected",String(t===tab))}
   renderHoras();
 }
@@ -616,7 +661,8 @@ document.addEventListener("click",e=>{const g=e.target.dataset&&e.target.dataset
 window.addEventListener("hashchange",()=>{if(readSetupHash()){start();return}show(location.hash.slice(1))});
 function refreshAll(force){
   renderPerson();renderCfg(force);renderDay();renderHoras();
-  $("#setupNotice").hidden=!S.loaded||!!(S.config.people.length&&S.config.clients.length);
+  document.querySelector('#tabs [data-tab="ajustes"]').hidden=!isAdmin();
+  $("#setupNotice").hidden=!S.loaded||!isAdmin()||!!(S.config.people.length&&S.config.clients.length);
   if(S.rows.length&&!$("#lines").contains(document.activeElement))renderLines();
 }
 function start(){
